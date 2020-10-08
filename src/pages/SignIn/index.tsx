@@ -54,7 +54,12 @@ const SignIn: React.FC = () => {
           formRef.current?.setErrors(errors);
         }
 
-        addToast();
+        addToast({
+          type: 'error',
+          title: 'Auth Error',
+          description:
+            'Invalid Authentication. Try again with the correct login data.',
+        });
       }
     },
     [signIn, addToast],
