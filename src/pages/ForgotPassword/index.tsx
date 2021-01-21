@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useState } from 'react';
 import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
@@ -16,11 +16,14 @@ import Button from '../../components/Button';
 
 import { Container, Content, AnimationContainer, Background } from './styles';
 
+import api from '../../services/api';
+
 interface ForgotPasswordFormData {
   email: string;
 }
 
 const ForgotPassword: React.FC = () => {
+  const [loading, setLoading] = useState(false);
   const formRef = useRef<FormHandles>(null);
 
   const { addToast } = useToast();
@@ -29,6 +32,7 @@ const ForgotPassword: React.FC = () => {
   const handleSubmit = useCallback(
     async (data: ForgotPasswordFormData) => {
       try {
+        setLoading(true);
         formRef.current?.setErrors({});
 
         const schema = Yup.object().shape({
@@ -43,7 +47,16 @@ const ForgotPassword: React.FC = () => {
 
         // recuperação de senha
 
-        // history.push('dashboard');
+        await api.post('/password/forgot', {
+          email: data.email,
+        });
+
+        addToast({
+          type: 'success',
+          title: 'Recovery Mail sended',
+          description:
+            'An Email was sended to confirm the password recovery, please check your mail-box',
+        });
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
@@ -59,6 +72,8 @@ const ForgotPassword: React.FC = () => {
           description:
             'An error occurred while trying to recover the password, try again',
         });
+      } finally {
+        setLoading(false);
       }
     },
     [addToast],
@@ -75,7 +90,9 @@ const ForgotPassword: React.FC = () => {
 
             <Input name="email" icon={FiMail} placeholder="E-mail" />
 
-            <Button type="submit">Recovery</Button>
+            <Button loading={loading} type="submit">
+              Recovery
+            </Button>
           </Form>
 
           <Link to="/">
