@@ -5,7 +5,6 @@ import { Form } from '@unform/web';
 import * as Yup from 'yup';
 import { Link, useHistory } from 'react-router-dom';
 
-import { useAuth } from '../../hooks/AuthContext';
 import { useToast } from '../../hooks/ToastContext';
 
 import getValidationErrors from '../../utils/getValidationErrors';
@@ -17,20 +16,18 @@ import Button from '../../components/Button';
 
 import { Container, Content, AnimationContainer, Background } from './styles';
 
-interface SignInFormData {
+interface ForgotPasswordFormData {
   email: string;
-  password: string;
 }
 
-const SignIn: React.FC = () => {
+const ForgotPassword: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
-  const { signIn } = useAuth();
   const { addToast } = useToast();
   const history = useHistory();
 
   const handleSubmit = useCallback(
-    async (data: SignInFormData) => {
+    async (data: ForgotPasswordFormData) => {
       try {
         formRef.current?.setErrors({});
 
@@ -38,19 +35,15 @@ const SignIn: React.FC = () => {
           email: Yup.string()
             .required('E-mail required')
             .email('Enter a valid e-mail'),
-          password: Yup.string().required('Password required'),
         });
 
         await schema.validate(data, {
           abortEarly: false,
         });
 
-        await signIn({
-          email: data.email,
-          password: data.password,
-        });
+        // recuperação de senha
 
-        history.push('dashboard');
+        // history.push('dashboard');
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
@@ -62,13 +55,13 @@ const SignIn: React.FC = () => {
 
         addToast({
           type: 'error',
-          title: 'Auth Error',
+          title: 'Password recovery error',
           description:
-            'Invalid Authentication. Try again with the correct login data.',
+            'An error occurred while trying to recover the password, try again',
         });
       }
     },
-    [signIn, addToast, history],
+    [addToast],
   );
 
   return (
@@ -78,24 +71,16 @@ const SignIn: React.FC = () => {
           <img src={logoImg} alt="GoBarber" />
 
           <Form ref={formRef} onSubmit={handleSubmit}>
-            <h1>Insert your logon</h1>
+            <h1>Password Recovery</h1>
 
             <Input name="email" icon={FiMail} placeholder="E-mail" />
-            <Input
-              name="password"
-              icon={FiLock}
-              type="password"
-              placeholder="Password"
-            />
 
-            <Button type="submit">Log in</Button>
-
-            <Link to="/forgot-password">Forgot my password</Link>
+            <Button type="submit">Recovery</Button>
           </Form>
 
-          <Link to="/signup">
+          <Link to="/">
             <FiLogIn />
-            Create an account
+            Back to login
           </Link>
         </AnimationContainer>
       </Content>
@@ -105,4 +90,4 @@ const SignIn: React.FC = () => {
   );
 };
 
-export default SignIn;
+export default ForgotPassword;
