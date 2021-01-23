@@ -9,6 +9,8 @@ import { useAuth } from '../../hooks/AuthContext';
 const Dashboard: React.FC = () => {
   const { signOut, user } = useAuth();
 
+  console.log(user.avatar_url);
+
   return (
     <Container>
       <Header>

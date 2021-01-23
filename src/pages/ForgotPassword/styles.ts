@@ -1,6 +1,8 @@
 import styled, { keyframes } from 'styled-components';
 import { shade } from 'polished';
 
+import { Grid } from '@agney/react-loading';
+
 import signInBackgroundImg from '../../assets/sign-in-background.png';
 
 export const Container = styled.div`
@@ -85,4 +87,12 @@ export const Background = styled.div`
   flex: 1;
   background: url(${signInBackgroundImg}) no-repeat center;
   background-size: cover;
+`;
+
+export const GridContainer = styled.div`
+  svg {
+    margin-top: 16px;
+    width: 56px;
+    color: #ff9000;
+  }
 `;

@@ -5,6 +5,8 @@ import { Form } from '@unform/web';
 import * as Yup from 'yup';
 import { Link, useHistory } from 'react-router-dom';
 
+import { useLoading, Grid } from '@agney/react-loading';
+
 import { useToast } from '../../hooks/ToastContext';
 
 import getValidationErrors from '../../utils/getValidationErrors';
@@ -14,7 +16,13 @@ import logoImg from '../../assets/logo.svg';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 
-import { Container, Content, AnimationContainer, Background } from './styles';
+import {
+  Container,
+  Content,
+  AnimationContainer,
+  Background,
+  GridContainer,
+} from './styles';
 
 import api from '../../services/api';
 
@@ -23,7 +31,13 @@ interface ForgotPasswordFormData {
 }
 
 const ForgotPassword: React.FC = () => {
+  const { containerProps, indicatorEl } = useLoading({
+    loading: true,
+    indicator: <Grid />,
+  });
+
   const [loading, setLoading] = useState(false);
+
   const formRef = useRef<FormHandles>(null);
 
   const { addToast } = useToast();
@@ -33,6 +47,7 @@ const ForgotPassword: React.FC = () => {
     async (data: ForgotPasswordFormData) => {
       try {
         setLoading(true);
+
         formRef.current?.setErrors({});
 
         const schema = Yup.object().shape({
@@ -90,9 +105,13 @@ const ForgotPassword: React.FC = () => {
 
             <Input name="email" icon={FiMail} placeholder="E-mail" />
 
-            <Button loading={loading} type="submit">
-              Recovery
-            </Button>
+            {loading ? (
+              <GridContainer {...containerProps}>{indicatorEl}</GridContainer>
+            ) : (
+              <Button loading={loading} type="submit">
+                Recovery
+              </Button>
+            )}
           </Form>
 
           <Link to="/">
