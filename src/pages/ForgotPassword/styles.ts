@@ -91,8 +91,8 @@ export const Background = styled.div`
 
 export const GridContainer = styled.div`
   svg {
-    margin-top: 16px;
-    width: 56px;
+    margin-top: 3px;
+    height: 56px;
     color: #ff9000;
   }
 `;
