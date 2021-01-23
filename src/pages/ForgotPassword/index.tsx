@@ -105,17 +105,6 @@ const ForgotPassword: React.FC = () => {
 
             <Input name="email" icon={FiMail} placeholder="E-mail" />
 
-            {/* {loading ? (
-              // <GridContainer {...containerProps}>{indicatorEl}</GridContainer>
-              <Button {...containerProps} loading={loading} type="submit">
-                {indicatorEl}
-              </Button>
-            ) : (
-              <Button loading={loading} type="submit">
-                Recovery
-              </Button>
-            )} */}
-
             <Button loading={loading} type="submit">
               Recovery
             </Button>
