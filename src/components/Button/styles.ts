@@ -17,3 +17,11 @@ export const Container = styled.button`
     background: ${shade(0.2, '#ff9000')};
   }
 `;
+
+export const IndicatorContainer = styled.div`
+  svg {
+    margin: 0;
+    height: 40px;
+    color: #232129;
+  }
+`;

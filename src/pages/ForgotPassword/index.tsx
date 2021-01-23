@@ -5,7 +5,7 @@ import { Form } from '@unform/web';
 import * as Yup from 'yup';
 import { Link, useHistory } from 'react-router-dom';
 
-import { useLoading, Grid } from '@agney/react-loading';
+import { useLoading, Oval } from '@agney/react-loading';
 
 import { useToast } from '../../hooks/ToastContext';
 
@@ -33,7 +33,7 @@ interface ForgotPasswordFormData {
 const ForgotPassword: React.FC = () => {
   const { containerProps, indicatorEl } = useLoading({
     loading: true,
-    indicator: <Grid />,
+    indicator: <Oval />,
   });
 
   const [loading, setLoading] = useState(false);
@@ -105,13 +105,20 @@ const ForgotPassword: React.FC = () => {
 
             <Input name="email" icon={FiMail} placeholder="E-mail" />
 
-            {loading ? (
-              <GridContainer {...containerProps}>{indicatorEl}</GridContainer>
+            {/* {loading ? (
+              // <GridContainer {...containerProps}>{indicatorEl}</GridContainer>
+              <Button {...containerProps} loading={loading} type="submit">
+                {indicatorEl}
+              </Button>
             ) : (
               <Button loading={loading} type="submit">
                 Recovery
               </Button>
-            )}
+            )} */}
+
+            <Button loading={loading} type="submit">
+              Recovery
+            </Button>
           </Form>
 
           <Link to="/">
