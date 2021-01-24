@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { FiClock, FiPower } from 'react-icons/fi';
 import {
@@ -10,6 +10,8 @@ import {
   Schedule,
   Calendar,
   NextAppointment,
+  Section,
+  Appointment,
 } from './styles';
 
 import logoImg from '../../assets/logo.svg';
@@ -18,6 +20,8 @@ import myPhotoGoBarber from '../../assets/myPhotoGoBarber.svg';
 import { useAuth } from '../../hooks/AuthContext';
 
 const Dashboard: React.FC = () => {
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
   const { signOut, user } = useAuth();
 
   console.log(user.avatar_url);
@@ -63,6 +67,50 @@ const Dashboard: React.FC = () => {
               </span>
             </div>
           </NextAppointment>
+
+          <Section>
+            <strong>Morning</strong>
+
+            <Appointment>
+              <span>
+                <FiClock />
+                08:00
+              </span>
+
+              <div>
+                <img src={myPhotoGoBarber} alt="Rafael Perez" />
+                <strong>Rafael Pérez</strong>
+              </div>
+            </Appointment>
+
+            <Appointment>
+              <span>
+                <FiClock />
+                09:00
+              </span>
+
+              <div>
+                <img src={myPhotoGoBarber} alt="Rafael Perez" />
+                <strong>Rafael Pérez</strong>
+              </div>
+            </Appointment>
+          </Section>
+
+          <Section>
+            <strong>Afternoon</strong>
+
+            <Appointment>
+              <span>
+                <FiClock />
+                15:00
+              </span>
+
+              <div>
+                <img src={myPhotoGoBarber} alt="Rafael Perez" />
+                <strong>Rafael Pérez</strong>
+              </div>
+            </Appointment>
+          </Section>
         </Schedule>
         <Calendar />
       </Content>
