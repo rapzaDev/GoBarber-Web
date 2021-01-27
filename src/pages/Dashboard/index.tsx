@@ -6,6 +6,7 @@ import 'react-day-picker/lib/style.css';
 
 import { FiClock, FiPower } from 'react-icons/fi';
 
+import { Link } from 'react-router-dom';
 import {
   Container,
   Header,
@@ -20,7 +21,6 @@ import {
 } from './styles';
 
 import logoImg from '../../assets/logo.svg';
-import myPhotoGoBarber from '../../assets/myPhotoGoBarber.svg';
 
 import { useAuth } from '../../hooks/AuthContext';
 import api from '../../services/api';
@@ -152,7 +152,9 @@ const Dashboard: React.FC = () => {
 
             <div>
               <span>Wellcome,</span>
-              <strong>{user.name}</strong>
+              <Link to="/profile">
+                <strong>{user.name}</strong>
+              </Link>
             </div>
           </Profile>
 
